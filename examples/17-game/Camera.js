@@ -29,6 +29,10 @@ export class Camera extends Node {
             -Math.sin(c.rotation[1]), 0, -Math.cos(c.rotation[1]));
         const right = vec3.set(vec3.create(),
             Math.cos(c.rotation[1]), 0, -Math.sin(c.rotation[1]));
+        const up = vec3.set(vec3.create(),
+            0, 40, 0);
+        const down = vec3.set(vec3.create(),
+            0, -40, 0);
 
         // 1: add movement acceleration
         let acc = vec3.create();
@@ -43,6 +47,14 @@ export class Camera extends Node {
         }
         if (this.keys['KeyA']) {
             vec3.sub(acc, acc, right);
+        }
+
+        if (this.keys['KeyE']) {
+            vec3.sub(acc, acc, up);
+        }
+
+        if (this.keys['KeyQ']) {
+            vec3.sub(acc, acc, down);
         }
 
         // 2: update velocity
