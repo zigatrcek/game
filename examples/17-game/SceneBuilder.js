@@ -19,6 +19,9 @@ export class SceneBuilder {
                 const mesh = new Mesh(this.spec.meshes[spec.mesh]);
                 const texture = this.spec.textures[spec.texture];
                 return new Model(mesh, texture, spec);
+            };
+            case 'map': {
+                //generate map
             }
             default: return new Node(spec);
         }
@@ -29,5 +32,9 @@ export class SceneBuilder {
         this.spec.nodes.forEach(spec => scene.addNode(this.createNode(spec)));
         return scene;
     }
+
+    generateMap(spec){
+        
+    };
 
 }
