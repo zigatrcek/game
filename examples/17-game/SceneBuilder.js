@@ -20,21 +20,42 @@ export class SceneBuilder {
                 const texture = this.spec.textures[spec.texture];
                 return new Model(mesh, texture, spec);
             };
-            case 'map': {
-                //generate map
-            }
             default: return new Node(spec);
         }
     }
 
     build() {
         let scene = new Scene();
+        let map = this.spec.map;
+        this.parseMap(scene, map);
         this.spec.nodes.forEach(spec => scene.addNode(this.createNode(spec)));
         return scene;
     }
 
-    generateMap(spec){
-        
+    parseMap(scene, map){
+        console.log('parsing map');
+        let offset = 2;
+        let grid = map.grid;
+        for(let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[0].length; j++) {
+                let translationX = i * offset;
+                let translationZ = j * offset;
+                let tile = {};
+                switch(grid[i][j]) {
+                    case 0:
+                        tile = map.maptile;
+                        break;
+                    case 1:
+                        tile = map.pathtile;
+                        break;
+                }
+
+                tile = JSON.parse(JSON.stringify(tile))
+                tile.translation = [translationX, 0, translationZ];
+                scene.addNode(this.createNode(tile));
+
+            }
+        }
     };
 
 }

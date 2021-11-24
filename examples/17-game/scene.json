@@ -1,82 +1,52 @@
 {
+  "map":
+  {
+    "grid": [
+      [0, 1, 0, 0, 0, 0, 0, 0],
+      [0, 1, 0, 0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 0, 1, 1, 1, 1, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 0]
+    ],
+    "maptile":
+    {
+      "type": "model",
+      "mesh": 0,
+      "texture": 0,
+      "aabb": {
+        "min": [-1, -1, -1],
+        "max": [1, 1, 1]
+      },
+      "translation": [0, 0, 0]
+    },
+    "pathtile":
+    {
+      "type": "model",
+      "mesh": 0,
+      "texture": 1,
+      "aabb": {
+        "min": [-1, -1, -1],
+        "max": [1, 1, 1]
+      },
+      "translation": [0, 0, 0]
+    }
+  },
   "nodes": [
     {
       "type": "camera",
-      "translation": [0, 1, 0],
+      "translation": [0, 30, 0],
+      "rotation": [-3.14, 0, 0],
       "aabb": {
         "min": [-0.2, -0.2, -0.2],
         "max": [0.2, 0.2, 0.2]
       },
       "aspect": 1,
-      "fov": 1,
+      "fov": 1.5,
       "near": 0.01,
       "far": 100
-    },
-    {
-      "type": "model",
-      "mesh": 0,
-      "texture": 0,
-      "aabb": {
-        "min": [-1, -1, -1],
-        "max": [1, 1, 1]
-      },
-      "translation": [3, 1, -5]
-    },
-    {
-      "type": "model",
-      "mesh": 0,
-      "texture": 1,
-      "aabb": {
-        "min": [-1, -1, -1],
-        "max": [1, 1, 1]
-      },
-      "translation": [0, 1, 5]
-    },
-    {
-      "type": "model",
-      "mesh": 1,
-      "texture": 1,
-      "aabb": {
-        "min": [-0.5, -0.5, -0.5],
-        "max": [0.5, 0.5, 0.5]
-      },
-      "translation": [0, 1, -5]
-    },
-    {
-      "type": "model",
-      "mesh": 0,
-      "texture": 0,
-      "aabb": {
-        "min": [-1, -0.1, -1],
-        "max": [1, 0.1, 1]
-      },
-      "translation": [3, 0.1, -1],
-      "rotation": [0, 1, 0],
-      "scale": [1, 0.1, 1]
-    },
-    {
-      "comment": "platform",
-      "type": "model",
-      "mesh": 0,
-      "texture": 1,
-      "aabb": {
-        "min": [-50, -0.2, -50],
-        "max": [50, 0, 50]
-      },
-      "translation": [0, -0.1, 0],
-      "scale": [50, 0.1, 50]
-    },
-    {
-      "comment": "start",
-      "type": "model",
-      "mesh": 0,
-      "texture": 0,
-      "aabb": {
-        "min": [45, 0, 35],
-        "max": [50, 0.1, 45]
-      },
-      "translation": [47.5, 0.05, 40],
-      "scale": [2.5, 0.01, 5]
     }
   ],
   "textures": [
