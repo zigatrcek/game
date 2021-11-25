@@ -11,9 +11,4 @@ export class Scene {
     traverse(before, after) {
         this.nodes.forEach(node => node.traverse(before, after));
     }
-
-    createMap(map) {
-        
-    }
-
 }

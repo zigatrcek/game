@@ -25,6 +25,7 @@ export class SceneBuilder {
     }
 
     build() {
+        console.log("building");
         let scene = new Scene();
         let map = this.spec.map;
         this.parseMap(scene, map);
@@ -34,7 +35,7 @@ export class SceneBuilder {
 
     parseMap(scene, map){
         console.log('parsing map');
-        let offset = 2;
+        let offset = 1;
         let grid = map.grid;
         for(let i = 0; i < grid.length; i++) {
             for (let j = 0; j < grid[0].length; j++) {
@@ -57,5 +58,7 @@ export class SceneBuilder {
             }
         }
     };
+
+
 
 }
