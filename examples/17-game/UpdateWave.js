@@ -48,7 +48,7 @@ function get_path_position(distance_to_travel, path) {
 function traverse_path(enemy, path){
 
     //speed = get_path_position()
-    let move = 0.01;
+    let move = 0.02;
     let res = get_path_position(enemy.distance_traveled + move, path);
     enemy.distance_traveled += move;
 
@@ -58,6 +58,7 @@ function traverse_path(enemy, path){
 
 
     enemy.translation[0] = res[0];
+    enemy.translation[1] = 1;
     enemy.translation[2] = res[1];
 
     enemy.updateTransform();

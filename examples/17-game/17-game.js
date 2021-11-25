@@ -45,9 +45,23 @@ class App extends Application {
             "min": [-1, -1, -1],
             "max": [1, 1, 1]
           },
-          "translation": [0, 1, 0],
+          "translation": [0, -50, 0],
           "scale": [0.25, 0.25, 0.25],
-        },]);
+        },{
+            "type": "wait"
+        },
+        {
+            "type": "model",
+            "mesh": 0,
+            "texture": 2,
+            "aabb": {
+              "min": [-1, -1, -1],
+              "max": [1, 1, 1]
+            },
+            "translation": [0, -50, 0],
+            "scale": [0.25, 0.25, 0.25],
+          }
+    ]);
 
         // Find first camera.
         this.camera = null;
@@ -64,12 +78,17 @@ class App extends Application {
 
     spawnWave(scene, builder, wave) {
         let i = 1;
+        let distance = 4; //distance_traveled between enemies, could also add delay object to the model
         for(let enemy of wave) {
-            let model = builder.createNode(enemy);
-            model.id = i;
-            scene.addNode(model);
+            //there's now also type "wait" to increment i and increase distance between objects
+            if (enemy.type == "model"){
+                let model = builder.createNode(enemy);
+                model.id = i;
+                model.distance_traveled = 0 - (i * distance);
+                scene.addNode(model);
+                console.log(model);
+            }
             i++;
-            model.distance_traveled = 0;
         }
         console.log("this scene:");
         console.log(this.scene);
