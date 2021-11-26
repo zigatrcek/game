@@ -177,6 +177,7 @@ export class UpdateWave {
         turret.updateTransform();
 
         if (turret.cooldown == 0) {
+            this.playTurretSound();
             this.spawn_bullet(0, turret.target, turret.translation);
             turret.cooldown = COOLDOWN;
         }
@@ -185,6 +186,15 @@ export class UpdateWave {
         }
 
     }
+
+    playTurretSound(){
+    	const can = new Audio("turret.mp3");
+        console.log("we are trying to play sound i guess")
+    	can.volume = 0.1;
+    	can.loop = false;
+    	can.play();
+    }
+
 
     findEnemyById(id){
         if (id == -1) return;

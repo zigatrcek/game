@@ -62,7 +62,7 @@ void main() {
     vec4 tColor = texture(uTexture, vTexCoord);
     // oColor = mix(vec4(255, 0, 0, 1), tColor, health);
     if (health < 0.20){
-      oColor = mix(vec4(255, tColor.g * health, tColor.b * health, 1), tColor, health/2.0) * vec4(vLight, 1);
+      oColor = mix(vec4(170, tColor.g * health, tColor.b * health, 1), tColor, health) * vec4(vLight, 1);
     } else {
       oColor = mix(vec4(255, tColor.g * health, tColor.b * health, 1), tColor, health) * vec4(vLight, 1);
     }
