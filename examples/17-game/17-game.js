@@ -127,6 +127,13 @@ class App extends Application {
             if (this.updateWave.hp <= 0){
                 this.showLoss();
                 console.log("its lost u idiot");
+                document.getElementById('overlay').hidden = true;
+            } else {
+                let hpObj = document.getElementById('hp');
+                hpObj.innerHTML = "HP: " + this.updateWave.hp;
+
+                let moneyObj = document.getElementById('money');
+                moneyObj.innerHTML = "Money: " + this.updateWave.money;
             }
         }
 

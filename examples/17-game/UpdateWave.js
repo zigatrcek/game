@@ -7,6 +7,7 @@ export class UpdateWave {
         this.scene = scene;
         this.path = path;
         this.hp = 500;
+        this.money = 200;
         this.bulletTypes = [
             {   "damage": 10,
                 "type": "model",
@@ -30,6 +31,7 @@ export class UpdateWave {
         this.update_bullets();
     }
 
+
     update_turrets(scene, path) {
         if (scene != null){
             for (let enemy of scene.nodes){
@@ -48,6 +50,7 @@ export class UpdateWave {
                 if (enemy.role == "enemy" && enemy != null) {
                     if (enemy.hp <= 0){
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
+                        this.money += enemy.maxHp/10;
                         return;
                     }
                     this.traverse_path(enemy, this.path);
