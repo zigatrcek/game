@@ -188,7 +188,7 @@ export class UpdateWave {
     }
 
     playTurretSound(){
-    	const can = new Audio("turret.mp3");
+    	const can = new Audio("laser.mp3");
         console.log("we are trying to play sound i guess")
     	can.volume = 0.1;
     	can.loop = false;
