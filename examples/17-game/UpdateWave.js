@@ -6,6 +6,7 @@ export class UpdateWave {
         this.spec = spec;
         this.scene = scene;
         this.path = path;
+        this.hp = 500;
         this.bulletTypes = [
             {   "damage": 10,
                 "type": "model",
@@ -59,6 +60,7 @@ export class UpdateWave {
                     // check if enemy has come to the end
                     if (this.distance(enemy.translation, [this.end[0], 0, this.end[1]]) < 0.1){
                         console.log("OH NO WE'VE BEEN HIT");
+                        this.hp -= enemy.hp;
                         // enemy.translation = [0, -50, 0];
                         //console.log(enemy.hp);
                         //console.log(this.scene);
