@@ -10,7 +10,7 @@ export class UpdateWave {
             {   "damage": 10,
                 "type": "model",
                 "mesh": 0,
-                "texture": 4,
+                "texture": 13,
                 "aabb": {
                     "min": [-0.1, -0.1, -0.1],
                     "max": [0.1, 0.1, 0.1]

@@ -52,7 +52,8 @@ class App extends Application {
             {
             "type": "model",
             "mesh": 0,
-            "texture": 3,
+            "texture": 13,
+            "health": 100,
             "aabb": {
                 "min": [-0.25, -0.25, -0.25],
                 "max": [0.25, 0.25, 0.25]
@@ -149,8 +150,8 @@ class App extends Application {
                 model.distance_traveled = 0 - (i * distance);
                 model.role = "enemy";
                 this.scene.addNode(model);
-                model.hp = "60";
-                model.maxHp = "60";
+                model.hp = enemy.health;
+                model.maxHp = enemy.health;
                 // console.log(model);
             }
             i++;

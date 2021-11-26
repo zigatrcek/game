@@ -75,7 +75,7 @@ export class Renderer {
                     let health = 1;
                     if (node.role == "enemy") {
                         health = node.hp / node.maxHp;
-                        console.log(health);
+                        //console.log(health);
                     }
                     gl.uniform1f(healthLoc, health);
 

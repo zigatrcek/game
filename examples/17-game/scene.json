@@ -40,8 +40,8 @@
   "nodes": [
     {
       "type": "camera",
-      "translation": [-5, 15, -5],
-      "rotation": [-0.8, -2.3, 0],
+      "translation": [-5, 10, -5],
+      "rotation": [-0.785398163, -2.3, 0],
       "aabb": {
         "min": [-0.2, -0.2, -0.2],
         "max": [0.2, 0.2, 0.2]
@@ -65,7 +65,9 @@
     "../../common/images/grey-wool.png",
     "../../common/images/red-wool.png",
     "../../common/images/blue-wool.png",
-    "../../common/images/light-grey-wool.png"
+    "../../common/images/light-grey-wool.png",
+    "../../common/images/yellow-wool.png",
+    "../../common/images/green-wool.png"
   ],
   "meshes": [
     "../../common/models/cube.json",
