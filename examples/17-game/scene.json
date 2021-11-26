@@ -1,6 +1,5 @@
 {
-  "map":
-  {
+  "map": {
     "grid": [
       [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -15,11 +14,10 @@
       [0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
     ],
-    "maptile":
-    {
+    "maptile": {
       "type": "model",
       "mesh": 0,
-      "texture": 0,
+      "texture": 12,
       "aabb": {
         "min": [-1, -1, -1],
         "max": [1, 1, 1]
@@ -27,11 +25,10 @@
       "translation": [0, 0, 0],
       "scale": [0.5, 0.5, 0.5]
     },
-    "pathtile":
-    {
+    "pathtile": {
       "type": "model",
       "mesh": 0,
-      "texture": 1,
+      "texture": 11,
       "aabb": {
         "min": [-1, -1, -1],
         "max": [1, 1, 1]
@@ -59,11 +56,21 @@
     "../../common/images/crate-diffuse.png",
     "../../common/images/grass.png",
     "../../common/images/trump.jpg",
-    "../../common/images/mexican.jpg"
+    "../../common/images/mexican.jpg",
+    "../../common/images/red.jpg",
+    "../../common/images/turret2.png",
+    "../../common/images/black-marble.jpg",
+    "../../common/images/grey-marble.jpg",
+    "../../common/images/white-marble.jpg",
+    "../../common/images/grey-wool.png",
+    "../../common/images/red-wool.png",
+    "../../common/images/blue-wool.png",
+    "../../common/images/light-grey-wool.png"
   ],
   "meshes": [
     "../../common/models/cube.json",
     "../../common/models/pyramid.json",
-    "../../common/models/turret.json"
+    "../../common/models/turret.json",
+    "../../common/models/turret2.json"
   ]
 }

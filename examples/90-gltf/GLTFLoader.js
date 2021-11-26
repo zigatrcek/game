@@ -273,6 +273,7 @@ export class GLTFLoader {
     }
 
     async loadNode(nameOrIndex) {
+        console.log(nameOrIndex);
         const gltfSpec = this.findByNameOrIndex(this.gltf.nodes, nameOrIndex);
         if (this.cache.has(gltfSpec)) {
             return this.cache.get(gltfSpec);
@@ -313,6 +314,7 @@ export class GLTFLoader {
 
         const scene = new Scene(options);
         this.cache.set(gltfSpec, scene);
+        console.log(scene);
         return scene;
     }
 

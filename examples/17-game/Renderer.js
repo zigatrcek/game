@@ -1,4 +1,4 @@
-import { mat4 } from '../../lib/gl-matrix-module.js';
+import {vec3, mat4 } from '../../lib/gl-matrix-module.js';
 
 import { WebGL } from '../../common/engine/WebGL.js';
 
@@ -8,8 +8,7 @@ export class Renderer {
 
     constructor(gl) {
         this.gl = gl;
-
-        gl.clearColor(1, 1, 1, 1);
+        gl.clearColor(0.06640625, 0.23828125, 0.328125, 1);
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
 
@@ -34,7 +33,7 @@ export class Renderer {
         });
     }
 
-    render(scene, camera) {
+    render(scene, camera, light) {
         const gl = this.gl;
 
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -60,6 +59,26 @@ export class Renderer {
                     gl.activeTexture(gl.TEXTURE0);
                     gl.bindTexture(gl.TEXTURE_2D, node.gl.texture);
                     gl.uniform1i(program.uniforms.uTexture, 0);
+
+                    gl.uniform1f(program.uniforms.uAmbient, light.ambient);
+                    gl.uniform1f(program.uniforms.uDiffuse, light.diffuse);
+                    gl.uniform1f(program.uniforms.uSpecular, light.specular);
+                    gl.uniform1f(program.uniforms.uShininess, light.shininess);
+                    gl.uniform3fv(program.uniforms.uLightPosition, light.position);
+                    let color = vec3.clone(light.color);
+                    vec3.scale(color, color, 1.0 / 255.0);
+                    gl.uniform3fv(program.uniforms.uLightColor,  color);
+                    gl.uniform3fv(program.uniforms.uLightAttenuation, light.attenuatuion);
+
+                    
+                    var healthLoc = gl.getUniformLocation(program.program, "healthIn");
+                    let health = 1;
+                    if (node.role == "enemy") {
+                        health = node.hp / node.maxHp;
+                        console.log(health);
+                    }
+                    gl.uniform1f(healthLoc, health);
+
                     gl.drawElements(gl.TRIANGLES, node.gl.indices, gl.UNSIGNED_SHORT, 0);
                 }
             },
@@ -68,6 +87,21 @@ export class Renderer {
             }
         );
     }
+
+    prepareNew(scene){
+        scene.nodes.forEach(node => {
+            if(!node.gl){
+                node.gl = {};
+                if (node.mesh) {
+                    Object.assign(node.gl, this.createModel(node.mesh));
+                }
+                if (node.image) {
+                    node.gl.texture = this.createTexture(node.image);
+                }
+            }
+        });
+    }
+
 
     createModel(model) {
         const gl = this.gl;

@@ -7,7 +7,7 @@ class App extends Application {
 
     async start() {
         this.loader = new GLTFLoader();
-        await this.loader.load('../../common/models/monkey/monkey.gltf');
+        await this.loader.load('../../common/models/turret/turret2.gltf');
 
         this.scene = await this.loader.loadScene(this.loader.defaultScene);
         this.camera = await this.loader.loadNode('Camera');

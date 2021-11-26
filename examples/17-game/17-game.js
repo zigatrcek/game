@@ -9,8 +9,9 @@ import { SceneLoader } from './SceneLoader.js';
 import { SceneBuilder } from './SceneBuilder.js';
 import { Mesh } from './Mesh.js';
 import { Model } from './Model.js';
+import { Light } from './Light.js';
 
-import { update_wave } from './UpdateWave.js';
+import { UpdateWave } from './UpdateWave.js';
 
 // import Helper from './Helper.js';
 
@@ -37,8 +38,13 @@ class App extends Application {
         this.physics = new Physics(this.scene);
         // this.helper = new Helper(this.scene, scene);
         this.paused = false;
-        this.waypoints = [[0, 1], [10, 1], [10, 5], [6, 5], [6, 3], [1, 3], [1, 10], [8, 10], [8, 8], [11, 8]];
+        this.waypoints = [[0, 1], [10, 1], [10, 5], [6, 5], [6, 3], [1, 3], [1, 10], [8, 10], [8, 8], [12, 8]];
+        this.updateWave = new UpdateWave(this.spec, this.scene, this.waypoints);
         this.currentWave = 0;
+
+        this.light = new Light();
+
+
         this.enemyTypes = [
             {
                 "type": "wait"
@@ -48,32 +54,45 @@ class App extends Application {
             "mesh": 0,
             "texture": 3,
             "aabb": {
-                "min": [-1, -1, -1],
-                "max": [1, 1, 1]
+                "min": [-0.25, -0.25, -0.25],
+                "max": [0.25, 0.25, 0.25]
             },
             "translation": [0, 3, 0],
             "scale": [0.25, 0.25, 0.25],
         },
         ]
         this.waves = [
+            [1,0,0],
+            [1,1],
             [1],
-            [1, 0, 1, 1, 0, 0, 1, 1, 1, 1],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1],
             [1, 0, 1, 1, 0, 0, 1, 1, 1, 1],
             [1, 0, 1, 1, 0, 0, 1, 1, 1, 1],
         ]
         this.turretTypes = [
             {
                 "type": "model",
-                "mesh": 2,
-                "texture": 2,
+                "mesh": 3,
+                "texture": 5,
                 "aabb": {
                     "min": [-0.2, -1, -0.2],
                     "max": [0.2, 1, 0.2]
                 },
               "translation": [0, 0.5, 0],
-              "scale": [0.03, 0.03, 0.03]
+              "scale": [1, 1, 1],
+              "rotation": [0, -Math.PI/2, 0],
             }
         ]
+        console.log(this.turretTypes);
+
+
+        this.end = this.waypoints[this.waypoints.length-1]
+
         this.turretGrid = JSON.parse(JSON.stringify(this.spec.map.grid));
         console.log(this.turretGrid);
         for (let y in this.turretGrid) {
@@ -85,16 +104,36 @@ class App extends Application {
         }
         console.log(this.turretGrid);
 
-// Find first camera.
-this.camera = null;
-this.scene.traverse(node => {
-    if (node instanceof Camera) {
-        this.camera = node;
-    }
-});
+        // Find first camera.
+        this.camera = null;
+        this.scene.traverse(node => {
+            if (node instanceof Camera) {
+                this.camera = node;
+            }
+        });
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
+}
+
+    update() {
+        const t = this.time = Date.now();
+        const dt = (this.time - this.startTime) * 0.001;
+        this.startTime = this.time;
+
+        if (this.camera) {
+            this.camera.update(dt);
+        }
+
+        if (this.physics) {
+            this.physics.update(dt);
+        }
+        if (!this.paused && this.updateWave) {
+            this.updateWave.update_wave();
+        }
+        if (this.scene) {
+            this.renderer.prepareNew(this.scene);
+        }
     }
 
     spawnWave(wave) {
@@ -110,11 +149,13 @@ this.scene.traverse(node => {
                 model.distance_traveled = 0 - (i * distance);
                 model.role = "enemy";
                 this.scene.addNode(model);
+                model.hp = "60";
+                model.maxHp = "60";
                 // console.log(model);
             }
             i++;
         }
-        this.renderer.prepare(this.scene);
+        this.renderer.prepareNew(this.scene);
         
     }
 
@@ -145,18 +186,23 @@ this.scene.traverse(node => {
         
         model.updateTransform();
         model.role = "turret";
-        model.target = -1;
+        model.target = null;
+        model.cooldown = 0;
         
         this.scene.addNode(model);
         this.turretGrid[position[1]][position[0]] = 'X';
     }
     // h>
     spawnTurret1(){
+        this.spawnTurret(0, [0, 0]);
         this.spawnTurret(0, [8, 3]);
         this.spawnTurret(0, [5, 5]);
         this.spawnTurret(0, [7, 8]);
         this.spawnTurret(0, [10, 10]);
-        this.renderer.prepare(this.scene); 
+        console.log("cum");
+        this.renderer.prepareNew(this.scene); 
+        console.log("oh yeah");
+        
     }
 
     enableCamera() {
@@ -175,34 +221,9 @@ this.scene.traverse(node => {
         }
     }
 
-    update() {
-        const t = this.time = Date.now();
-        const dt = (this.time - this.startTime) * 0.001;
-        this.startTime = this.time;
-
-        if (this.camera) {
-            this.camera.update(dt);
-        }
-
-        if (this.physics) {
-            this.physics.update(dt);
-        }
-        if (!this.paused) {
-            update_wave(this.scene, this.waypoints);
-        }
-        // this.update_game()
-
-        // if (this.helper != null && !this.test) {
-        //     this.helper.spawnTurret();
-        //     this.test = true;
-        // } 
-        //console.log(this.scene)
-
-    }
-
     render() {
         if (this.scene) {
-            this.renderer.render(this.scene, this.camera);
+            this.renderer.render(this.scene, this.camera, this.light);
         }
     }
 
