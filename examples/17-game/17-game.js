@@ -53,7 +53,7 @@ class App extends Application {
             "type": "model",
             "mesh": 0,
             "texture": 13,
-            "health": 100,
+            "hp": 100,
             "aabb": {
                 "min": [-0.25, -0.25, -0.25],
                 "max": [0.25, 0.25, 0.25]
@@ -122,6 +122,14 @@ class App extends Application {
         const dt = (this.time - this.startTime) * 0.001;
         this.startTime = this.time;
 
+
+        if (this.updateWave){
+            if (this.updateWave.hp <= 0){
+                this.showLoss();
+                console.log("its lost u idiot");
+            }
+        }
+
         if (this.camera) {
             this.camera.update(dt);
         }
@@ -150,8 +158,8 @@ class App extends Application {
                 model.distance_traveled = 0 - (i * distance);
                 model.role = "enemy";
                 this.scene.addNode(model);
-                model.hp = enemy.health;
-                model.maxHp = enemy.health;
+                model.hp = enemy.hp;
+                model.maxHp = enemy.hp;
                 // console.log(model);
             }
             i++;
@@ -250,6 +258,10 @@ class App extends Application {
 		return temp;
 	}
 
+    showLoss(){
+        document.getElementById("loss").hidden = false;
+    }
+
     pause_unpause() {
         this.paused = !this.paused;
     }
@@ -265,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gui.add(app, 'spawnNextWave');
     gui.add(app, 'spawnTurret1');
     gui.add(app, 'pause_unpause');
+    gui.add(app, 'showLoss');
 });
 
 

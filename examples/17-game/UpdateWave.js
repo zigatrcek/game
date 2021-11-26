@@ -61,6 +61,7 @@ export class UpdateWave {
                     if (this.distance(enemy.translation, [this.end[0], 0, this.end[1]]) < 0.1){
                         console.log("OH NO WE'VE BEEN HIT");
                         this.hp -= enemy.hp;
+                        console.log(this.hp);
                         // enemy.translation = [0, -50, 0];
                         //console.log(enemy.hp);
                         //console.log(this.scene);
