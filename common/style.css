@@ -95,3 +95,15 @@ a.back:hover {
     vertical-align: middle;
     margin-bottom: 10px;
 }
+
+#intro {
+    color:black;
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    position:fixed;
+    margin:10px;
+    border-radius:10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
