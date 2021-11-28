@@ -151,7 +151,6 @@ class App extends Application {
         if (this.updateWave){
             if (this.updateWave.hp <= 0){
                 this.showLoss();
-                console.log("its lost u idiot");
                 document.getElementById('overlay').hidden = true;
             } else {
                 let hpObj = document.getElementById('hp');
@@ -382,6 +381,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case " ":
                 app.spawnNextWave();
+                break;
+            case "p":
+                app.pause_unpause();
                 break;
                 
         }
