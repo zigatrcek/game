@@ -42,6 +42,7 @@ class App extends Application {
     this.physics = new Physics(this.scene);
     // this.helper = new Helper(this.scene, scene);
     this.paused = false;
+    this.lost = false;
     this.waypoints = [
       [0, 1],
       [10, 1],
@@ -385,13 +386,19 @@ class App extends Application {
   }
 
   showVictory() {
+    if (!this.loss)
     document.getElementById("game").style.display = "none";
     document.getElementById("victory").hidden = false;
   }
 
   showLoss() {
+
+
+
+
     document.getElementById("game").style.display = "none";
     document.getElementById("loss").hidden = false;
+    this.loss = true;
   }
 
   pause_unpause() {
