@@ -35,6 +35,8 @@ class App extends Application {
         this.spec = await new SceneLoader().loadScene(uri);
         this.builder = new SceneBuilder(this.spec);
         this.scene = this.builder.build();
+        this.map = this.builder.map;
+        console.log(this.map);
         this.physics = new Physics(this.scene);
         // this.helper = new Helper(this.scene, scene);
         this.paused = false;
@@ -42,8 +44,13 @@ class App extends Application {
         this.updateWave = new UpdateWave(this.spec, this.scene, this.waypoints);
         this.currentWave = 0;
 
-        this.light = new Light();
+        //highlight coords
+        this.i = 0;
+        this.j = 0;
 
+        this.setSelected(true);
+
+        this.light = new Light();
 
         this.enemyTypes = [
             {
@@ -76,7 +83,7 @@ class App extends Application {
         this.waves = [
             [1],
             [1,0,0,1],
-            [1,1],
+            [2,1],
             [1,1,0,1],
             [2],
             [1, 1, 0, 2],
@@ -107,10 +114,18 @@ class App extends Application {
             for (let x in this.turretGrid) {
                 if (this.turretGrid[y][x] == 1) {
                     this.turretGrid[y][x] = 'X';
+                    this.map[y][x].colorM = [1, 0, 0];
+    
                 }
             }
         }
+
         console.log(this.turretGrid);
+        console.log(this.map);
+        console.log("dis");
+        // this.map[0][0].colorM = [1, 0, 0];
+        // console.log(this.map[0][0]);
+        // console.log(this.turretGrid);
 
         // Find first camera.
         this.camera = null;
@@ -122,6 +137,7 @@ class App extends Application {
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
+
 }
 
     update() {
@@ -129,6 +145,7 @@ class App extends Application {
         const dt = (this.time - this.startTime) * 0.001;
         this.startTime = this.time;
 
+        //console.log(this.map);
 
         if (this.updateWave){
             if (this.updateWave.hp <= 0){
@@ -213,23 +230,20 @@ class App extends Application {
         model.target = null;
         model.cooldown = 0;
         if (this.updateWave.money - COST < 0) return;
-        if (this.turretGrid[position[1]][position[0]] == 'X') return;
+        if (this.turretGrid[position[0]][position[1]] == 'X') return;
 
         this.updateWave.money -= COST;
         
         this.scene.addNode(model);
-        this.turretGrid[position[1]][position[0]] = 'X';
+        this.turretGrid[position[0]][position[1]] = 'X';
+        this.map[position[0]][position[1]].colorM = [1, 0, 0]
     }
     // h>
     spawnTurret1(){
-        this.spawnTurret(0, [0, 0]);
-        this.spawnTurret(0, [8, 3]);
-        this.spawnTurret(0, [5, 5]);
-        this.spawnTurret(0, [7, 8]);
-        this.spawnTurret(0, [10, 10]);
-        console.log("cum");
+        this.spawnTurret(0, [this.i, this.j]);
+        //console.log("cum");
         this.renderer.prepareNew(this.scene); 
-        console.log("oh yeah");
+        //console.log("oh yeah");
         
     }
 
@@ -248,6 +262,15 @@ class App extends Application {
             this.camera.disable();
         }
     }
+
+    setSelected(tf){
+        this.map[this.i][this.j].selected = tf;
+    }
+
+    setSelectedGUI(){
+        this.setSelected(true);
+    }
+
 
     render() {
         if (this.scene) {
@@ -285,7 +308,43 @@ class App extends Application {
         this.paused = !this.paused;
     }
 
+
+    increaseI(){
+        if (this.i >= 11 ) return;
+        this.setSelected(false);
+        this.i++;
+        this.setSelected(true);
+    }
+
+    decreaseI(){
+        if (this.i <= 0) return;
+        this.setSelected(false);
+        this.i--;
+        this.setSelected(true);
+    }
+
+    increaseJ(){
+        if (this.j >=11) return;
+        this.setSelected(false);
+        this.j++;
+        this.setSelected(true);
+    }
+
+    decreaseJ(){
+        if (this.j <= 0) return;
+        this.setSelected(false);
+        this.j--;
+        this.setSelected(true);
+    }
 }
+
+
+let turret1 = document.getElementById("turret1");
+
+// turret1.addEventListener("click", (e) => {
+//     console.log("we'be been clicked");
+// })
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -297,6 +356,38 @@ document.addEventListener('DOMContentLoaded', () => {
     gui.add(app, 'spawnTurret1');
     gui.add(app, 'pause_unpause');
     gui.add(app, 'showLoss');
+
+    document.addEventListener("keydown", function (e) {
+        //console.log(e.key);
+        switch (e.key) {
+            
+            //model translation
+    
+            case "ArrowUp":
+                app.increaseI();
+                break;
+            case "ArrowDown":
+                app.decreaseI();
+                break;
+            case "ArrowRight":
+                app.increaseJ();
+                break;
+            case "ArrowLeft":
+                app.decreaseJ();
+                break;
+            case "Enter":
+                app.spawnTurret1();
+                break;
+            case " ":
+                app.spawnNextWave();
+                break;
+                
+        }
+    });
+
+
+    // gui.add(app, 'increaseI');
+    // gui.add(app, 'decreaseI');
+    // gui.add(app, 'increaseJ');
+    // gui.add(app, 'decreaseJ');
 });
-
-

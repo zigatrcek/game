@@ -79,6 +79,14 @@ export class Renderer {
                     }
                     gl.uniform1f(healthLoc, health);
 
+                    let colorC = [1, 1, 1];
+
+                    if (node.colorM && node.selected){
+                        colorC = node.colorM;
+                    }
+                    var colorLoc = gl.getUniformLocation(program.program, "highlightedColor");
+                    gl.uniform3fv(colorLoc, colorC);
+
                     gl.drawElements(gl.TRIANGLES, node.gl.indices, gl.UNSIGNED_SHORT, 0);
                 }
             },

@@ -5,6 +5,8 @@ layout (location = 2) in vec2 aNormal;
  
 uniform float healthIn;
 
+uniform vec3 highlightedColor;
+
 uniform mat4 uViewModel;
 uniform mat4 uProjection;
 
@@ -19,6 +21,7 @@ uniform vec3 uLightAttenuation;
 
 out vec2 vTexCoord;
 out float health;
+out vec3 iHighlightedColor;
 
 out vec3 vLight;
 
@@ -44,6 +47,8 @@ void main() {
     health = healthIn;
     vTexCoord = aTexCoord;
     gl_Position = uProjection * uViewModel * aPosition;
+
+    iHighlightedColor = highlightedColor; 
 }
 `;
 
@@ -52,6 +57,7 @@ precision mediump float;
 
 uniform mediump sampler2D uTexture;
 
+in vec3 iHighlightedColor;
 in vec2 vTexCoord;
 in vec3 vLight;
 in float health;
@@ -67,6 +73,7 @@ void main() {
       oColor = mix(vec4(255, tColor.g * health, tColor.b * health, 1), tColor, health) * vec4(vLight, 1);
     }
 
+    oColor *= vec4(iHighlightedColor, 1);
 }
 `;
 
