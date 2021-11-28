@@ -53,27 +53,34 @@ class App extends Application {
             "type": "model",
             "mesh": 0,
             "texture": 13,
-            "hp": 100,
+            "hp": 50,
             "aabb": {
-                "min": [-0.25, -0.25, -0.25],
-                "max": [0.25, 0.25, 0.25]
+                "min": [-0.12, -0.12, -0.12],
+                "max": [0.12, 0.12, 0.12]
             },
             "translation": [0, 3, 0],
-            "scale": [0.25, 0.25, 0.25],
-        },
+            "scale": [0.12, 0.12, 0.12],
+            },{
+                "type": "model",
+                "mesh": 0,
+                "texture": 13,
+                "hp": 100,
+                "aabb": {
+                    "min": [-0.25, -0.25, -0.25],
+                    "max": [0.25, 0.25, 0.25]
+                },
+                "translation": [0, 3, 0],
+                "scale": [0.25, 0.25, 0.25],
+                },
         ]
         this.waves = [
-            [1,0,0],
+            [1],
+            [1,0,0,1],
             [1,1],
-            [1],
-            [1],
-            [1],
-            [1],
-            [1],
-            [1],
-            [1],
-            [1, 0, 1, 1, 0, 0, 1, 1, 1, 1],
-            [1, 0, 1, 1, 0, 0, 1, 1, 1, 1],
+            [1,1,0,1],
+            [2],
+            [1, 1, 0, 2],
+            [2, 0, 2],
         ]
         this.turretTypes = [
             {
@@ -184,6 +191,7 @@ class App extends Application {
     
     spawnTurret(turretIndex, position){
         let turret = this.turretTypes[turretIndex];
+        let COST = 100;
         
         
         const mesh = new Mesh(this.spec.meshes[turret.mesh]);
@@ -204,6 +212,10 @@ class App extends Application {
         model.role = "turret";
         model.target = null;
         model.cooldown = 0;
+        if (this.updateWave.money - COST < 0) return;
+        if (this.turretGrid[position[1]][position[0]] == 'X') return;
+
+        this.updateWave.money -= COST;
         
         this.scene.addNode(model);
         this.turretGrid[position[1]][position[0]] = 'X';

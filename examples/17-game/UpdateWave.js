@@ -9,10 +9,10 @@ export class UpdateWave {
         this.hp = 500;
         this.money = 200;
         this.bulletTypes = [
-            {   "damage": 10,
+            {   "damage": 13,
                 "type": "model",
                 "mesh": 0,
-                "texture": 13,
+                "texture": 10,
                 "aabb": {
                     "min": [-0.1, -0.1, -0.1],
                     "max": [0.1, 0.1, 0.1]
@@ -50,7 +50,7 @@ export class UpdateWave {
                 if (enemy.role == "enemy" && enemy != null) {
                     if (enemy.hp <= 0){
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
-                        this.money += enemy.maxHp/10;
+                        this.money += enemy.maxHp/2;
                         return;
                     }
                     this.traverse_path(enemy, this.path);
@@ -65,6 +65,7 @@ export class UpdateWave {
                         console.log("OH NO WE'VE BEEN HIT");
                         this.hp -= enemy.hp;
                         console.log(this.hp);
+
                         // enemy.translation = [0, -50, 0];
                         //console.log(enemy.hp);
                         //console.log(this.scene);
@@ -101,6 +102,7 @@ export class UpdateWave {
         if (this.distance(bullet.translation, target.translation) < 0.1) {
             target.hp -= bullet.damage;
             this.scene.removeNode(this.scene.nodes.indexOf(bullet));
+            this.playHit();
         }
     }
 
@@ -177,7 +179,7 @@ export class UpdateWave {
         turret.updateTransform();
 
         if (turret.cooldown == 0) {
-            this.playTurretSound();
+            this.playLaser();
             this.spawn_bullet(0, turret.target, turret.translation);
             turret.cooldown = COOLDOWN;
         }
@@ -187,12 +189,20 @@ export class UpdateWave {
 
     }
 
-    playTurretSound(){
-    	const can = new Audio("laser.mp3");
-        console.log("we are trying to play sound i guess")
-    	can.volume = 0.1;
-    	can.loop = false;
-    	can.play();
+    playLaser(){
+    	const sound = new Audio("laser.mp3");
+        //console.log("we are trying to play sound i guess")
+        sound.loop = false;
+    	sound.volume = 0.1;
+    	sound.play();
+    }
+
+    playHit(){
+    	const sound = new Audio("hit.mp3");
+        //console.log("we are trying to play sound i guess")
+        sound.loop = false;
+    	sound.volume = 0.1;
+    	sound.play();
     }
 
 
