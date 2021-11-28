@@ -6,7 +6,7 @@ export class UpdateWave {
     this.spec = spec;
     this.scene = scene;
     this.path = path;
-    this.hp = 50;
+    this.hp = 100;
     this.money = 200;
     this.bulletTypes = [
       {
@@ -57,7 +57,7 @@ export class UpdateWave {
 
           if (enemy.hp <= 0) {
             this.scene.removeNode(this.scene.nodes.indexOf(enemy));
-            this.money += Math.min(enemy.maxHp / 2, 75);
+            this.money += Math.min(enemy.maxHp / 5 * 2, 75);
             this.playDeath();
 
             if (enemy.child && enemy.advanced == "snake") {

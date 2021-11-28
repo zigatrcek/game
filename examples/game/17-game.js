@@ -87,7 +87,7 @@ class App extends Application {
         type: "model",
         mesh: 0,
         texture: 13,
-        hp: 80,
+        hp: 100,
         aabb: {
           min: [-0.25, -0.25, -0.25],
           max: [0.25, 0.25, 0.25],
@@ -100,7 +100,7 @@ class App extends Application {
         type: "model",
         mesh: 0,
         texture: 13,
-        hp: 50,
+        hp: 150,
         aabb: {
           min: [-0.25, -0.25, -0.25],
           max: [0.25, 0.25, 0.25],
@@ -112,7 +112,7 @@ class App extends Application {
         type: "model",
         mesh: 0,
         texture: 13,
-        hp: 300,
+        hp: 250,
         aabb: {
           min: [-0.25, -0.25, -0.25],
           max: [0.25, 0.25, 0.25],
@@ -122,15 +122,12 @@ class App extends Application {
       },
     ];
     this.waves = [
-      [1, 0, 0, 1, 0, 0, 1],
-      [1, 1, 0, 1],
-      [2, 0, 0, 0, 1],
-      [3, 3, 2],
-      [2, 2, 2, 2, 2, 2],
-      [2, 3, 2, 3, 2, 3, 0, 3, 3, 3, 3],
-      [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-      [4, 2, 4],
-      [4, 4, 4, 4, 4, 4, 4, 4, 4],
+      [1, 0, 0, 1, 0],
+      [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 2],
+      [2, 1, 0, 0, 1, 0, 2, 2],
+      [3, 0, 0, 3, 1, 1],
+      [1,2,0,0,0,4],
+      [4, 0, 0, 4],
     ];
     this.turretTypes = [
       {
@@ -198,6 +195,17 @@ class App extends Application {
 
         let moneyObj = document.getElementById("money");
         moneyObj.innerHTML = "Money: " + this.updateWave.money;
+
+        let statusObj = document.getElementById("wavestatus");
+
+
+        if (this.paused){
+          statusObj.innerHTML = "Paused... Press P to continue";
+        } else if (this.updateWave.isPlaying){
+          statusObj.innerHTML = "ONGOING WAVE";
+        } else {
+          statusObj.innerHTML = "Press \"space\" to Continue";
+        }
       }
     }
 
@@ -454,6 +462,9 @@ document.addEventListener("DOMContentLoaded", () => {
         app.spawnNextWave();
         break;
       case "p":
+        app.pause_unpause();
+        break;
+       case "P":
         app.pause_unpause();
         break;
     }
