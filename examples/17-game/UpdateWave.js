@@ -50,10 +50,25 @@ export class UpdateWave {
             for (let enemy of this.scene.nodes){
                 if (enemy != null && enemy.role == "enemy") {
                     playingFlag = true;
+
+                    if (enemy.advanced == "snake"){
+                        //console.log(enemy);
+                    }
+
+
+
                     if (enemy.hp <= 0){
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
                         this.money += enemy.maxHp/2;
                         this.playDeath();
+
+
+                        if (enemy.child && enemy.advanced == "snake"){
+                            this.scene.removeNode(this.scene.nodes.indexOf(enemy.child));
+
+                        }
+
+
                         return;
                     }
                     this.traverse_path(enemy, this.path);
@@ -67,11 +82,28 @@ export class UpdateWave {
                     if (this.distance(enemy.translation, [this.end[0], 0, this.end[1]]) < 0.1){
                         console.log("OH NO WE'VE BEEN HIT");
                         this.hp -= enemy.hp;
-                        console.log(this.hp);
+                        //console.log(this.hp);
 
                         // enemy.translation = [0, -50, 0];
                         //console.log(enemy.hp);
                         //console.log(this.scene);
+                        this.scene.removeNode(this.scene.nodes.indexOf(enemy));
+                        //console.log(this.scene);
+                        return;
+                    }
+
+                }
+
+                if (enemy != null && enemy.role == "snakeTail"){
+                    playingFlag = true;
+                    this.traverse_path(enemy, this.path);
+
+                    let move = 0.05;
+                    let res = this.get_path_position(enemy.distance_traveled + move, this.path);
+                    enemy.distance_traveled += move;
+
+                    if (this.distance(enemy.translation, [this.end[0], 0, this.end[1]]) < 0.1){
+    
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
                         //console.log(this.scene);
                         return;
@@ -110,6 +142,11 @@ export class UpdateWave {
             this.scene.removeNode(this.scene.nodes.indexOf(bullet));
             if (target.hp > 0){
                 this.playHit();
+            }
+
+            if (target.child && target.advanced == "snake"){
+                target.child.hp -= bullet.damage;
+                //console.log("removing childs hp");
             }
         }
     }

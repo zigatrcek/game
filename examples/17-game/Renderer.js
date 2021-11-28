@@ -73,7 +73,7 @@ export class Renderer {
                     
                     var healthLoc = gl.getUniformLocation(program.program, "healthIn");
                     let health = 1;
-                    if (node.role == "enemy") {
+                    if (node.role == "enemy" || node.role == "snakeTail") {
                         health = node.hp / node.maxHp;
                         //console.log(health);
                     }

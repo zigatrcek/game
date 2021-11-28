@@ -24,13 +24,13 @@ class App extends Application {
         this.time = Date.now();
         this.startTime = this.time;
         this.aspect = 1;
-        
+
         this.pointerlockchangeHandler = this.pointerlockchangeHandler.bind(this);
         document.addEventListener('pointerlockchange', this.pointerlockchangeHandler);
-        
+
         this.load('scene.json');
     }
-    
+
     async load(uri) {
         this.spec = await new SceneLoader().loadScene(uri);
         this.builder = new SceneBuilder(this.spec);
@@ -58,17 +58,17 @@ class App extends Application {
                 "type": "wait"
             },
             {
-            "type": "model",
-            "mesh": 0,
-            "texture": 13,
-            "hp": 50,
-            "aabb": {
-                "min": [-0.12, -0.12, -0.12],
-                "max": [0.12, 0.12, 0.12]
-            },
-            "translation": [0, 3, 0],
-            "scale": [0.12, 0.12, 0.12],
-            },{
+                "type": "model",
+                "mesh": 0,
+                "texture": 13,
+                "hp": 50,
+                "aabb": {
+                    "min": [-0.12, -0.12, -0.12],
+                    "max": [0.12, 0.12, 0.12]
+                },
+                "translation": [0, -3, 0],
+                "scale": [0.12, 0.12, 0.12],
+            }, {
                 "type": "model",
                 "mesh": 0,
                 "texture": 13,
@@ -77,15 +77,28 @@ class App extends Application {
                     "min": [-0.25, -0.25, -0.25],
                     "max": [0.25, 0.25, 0.25]
                 },
-                "translation": [0, 3, 0],
+                "translation": [0, -3, 0],
                 "scale": [0.25, 0.25, 0.25],
+            },
+            {
+                "advanced": "snake",
+                "type": "model",
+                "mesh": 0,
+                "texture": 13,
+                "hp": 40,
+                "aabb": {
+                    "min": [-0.25, -0.25, -0.25],
+                    "max": [0.25, 0.25, 0.25]
                 },
+                "translation": [0, -3, 0],
+                "scale": [0.25, 0.25, 0.25],
+            },
         ]
         this.waves = [
-            [1],
-            [1,0,0,1],
-            [2,1],
-            [1,1,0,1],
+            [3],
+            [1, 0, 0, 1],
+            [2, 1],
+            [1, 1, 0, 1],
             [2],
             [1, 1, 0, 2],
             [2, 0, 2],
@@ -99,15 +112,15 @@ class App extends Application {
                     "min": [-0.2, -1, -0.2],
                     "max": [0.2, 1, 0.2]
                 },
-              "translation": [0, 0.5, 0],
-              "scale": [1, 1, 1],
-              "rotation": [0, -Math.PI/2, 0],
+                "translation": [0, 0.5, 0],
+                "scale": [1, 1, 1],
+                "rotation": [0, -Math.PI / 2, 0],
             }
         ]
         console.log(this.turretTypes);
 
 
-        this.end = this.waypoints[this.waypoints.length-1]
+        this.end = this.waypoints[this.waypoints.length - 1]
 
         this.turretGrid = JSON.parse(JSON.stringify(this.spec.map.grid));
         console.log(this.turretGrid);
@@ -116,14 +129,14 @@ class App extends Application {
                 if (this.turretGrid[y][x] == 1) {
                     this.turretGrid[y][x] = 'X';
                     this.map[y][x].colorM = [1, 0, 0];
-    
+
                 }
             }
         }
 
-        console.log(this.turretGrid);
-        console.log(this.map);
-        console.log("dis");
+        // console.log(this.turretGrid);
+        // console.log(this.map);
+        // console.log("dis");
         // this.map[0][0].colorM = [1, 0, 0];
         // console.log(this.map[0][0]);
         // console.log(this.turretGrid);
@@ -139,7 +152,7 @@ class App extends Application {
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
 
-}
+    }
 
     update() {
         const t = this.time = Date.now();
@@ -148,8 +161,8 @@ class App extends Application {
 
         //console.log(this.map);
 
-        if (this.updateWave){
-            if (this.updateWave.hp <= 0){
+        if (this.updateWave) {
+            if (this.updateWave.hp <= 0) {
                 this.showLoss();
                 document.getElementById('overlay').hidden = true;
             } else {
@@ -180,10 +193,10 @@ class App extends Application {
         let i = 1;
         let distance = 4; //distance_traveled between enemies, could also add delay object to the model
         console.log(wave);
-        for(let enemyIndex of wave) {
+        for (let enemyIndex of wave) {
             let enemy = this.enemyTypes[enemyIndex];
             //there's now also type "wait" to increment i and increase distance between objects
-            if (enemy.type == "model"){
+            if (enemy.type == "model") {
                 let model = this.builder.createNode(enemy);
                 model.id = i;
                 model.distance_traveled = 0 - (i * distance);
@@ -192,26 +205,45 @@ class App extends Application {
                 model.hp = enemy.hp;
                 model.maxHp = enemy.hp;
                 // console.log(model);
+                if (enemy.advanced == "snake") {
+                    this.getSnakeTails(i, distance, model, enemy);
+                    model.advanced = "snake";
+                }
             }
             i++;
         }
         this.renderer.prepareNew(this.scene);
-        
+
+    }
+
+
+
+    getSnakeTails(i, distance, model, enemy) {
+            let model1 = this.builder.createNode(this.enemyTypes[2]);
+            //console.log("Snake tails");
+            //console.log(model1);
+            model1.id = i;
+            model1.distance_traveled = 0 - (i * distance) - 0.5;
+            model1.role = "snakeTail";
+            this.scene.addNode(model1);
+            model.child = model1;
+            model1.hp = enemy.hp;
+            model1.maxHp = enemy.hp;
     }
 
     spawnNextWave() {
-        if(this.currentWave >= this.waves.length || this.updateWave.isPlaying == true) return;
-        
+        if (this.currentWave >= this.waves.length || this.updateWave.isPlaying == true) return;
+
         this.spawnWave(this.waves[this.currentWave]);
         this.currentWave++;
         this.updateWave.isPlaying = true;
     }
-    
-    spawnTurret(turretIndex, position){
+
+    spawnTurret(turretIndex, position) {
         let turret = this.turretTypes[turretIndex];
         let COST = 100;
-        
-        
+
+
         const mesh = new Mesh(this.spec.meshes[turret.mesh]);
         const texture = this.spec.textures[turret.texture];
         let model = new Model(mesh, texture, turret);
@@ -220,12 +252,12 @@ class App extends Application {
         let x = model.translation[0];
         let y = model.translation[1];
         let z = model.translation[2];
-        
+
         //console.log(position);
         //console.log(position[1]);
-        
+
         model.translation = [position[0], y, position[1]];
-        
+
         model.updateTransform();
         model.role = "turret";
         model.target = null;
@@ -234,18 +266,18 @@ class App extends Application {
         if (this.turretGrid[position[0]][position[1]] == 'X') return;
 
         this.updateWave.money -= COST;
-        
+
         this.scene.addNode(model);
         this.turretGrid[position[0]][position[1]] = 'X';
         this.map[position[0]][position[1]].colorM = [1, 0, 0]
     }
     // h>
-    spawnTurret1(){
+    spawnTurret1() {
         this.spawnTurret(0, [this.i, this.j]);
         //console.log("cum");
-        this.renderer.prepareNew(this.scene); 
+        this.renderer.prepareNew(this.scene);
         //console.log("oh yeah");
-        
+
     }
 
     enableCamera() {
@@ -264,11 +296,11 @@ class App extends Application {
         }
     }
 
-    setSelected(tf){
+    setSelected(tf) {
         this.map[this.i][this.j].selected = tf;
     }
 
-    setSelectedGUI(){
+    setSelectedGUI() {
         this.setSelected(true);
     }
 
@@ -289,19 +321,19 @@ class App extends Application {
         }
     }
 
-    arrAdd(arr1, arr2){
-		if(arr1.length != arr2.length){
-			console.log("ADDING ERROR");
-			return;
-		}
-		let temp = [];
-		for(let i = 0; i < arr1.length; i++){
-			temp.push(arr1[i] + arr2[i]);
-		}
-		return temp;
-	}
+    arrAdd(arr1, arr2) {
+        if (arr1.length != arr2.length) {
+            console.log("ADDING ERROR");
+            return;
+        }
+        let temp = [];
+        for (let i = 0; i < arr1.length; i++) {
+            temp.push(arr1[i] + arr2[i]);
+        }
+        return temp;
+    }
 
-    showLoss(){
+    showLoss() {
         document.getElementById("loss").hidden = false;
     }
 
@@ -310,28 +342,28 @@ class App extends Application {
     }
 
 
-    increaseI(){
-        if (this.i >= 11 ) return;
+    increaseI() {
+        if (this.i >= 11) return;
         this.setSelected(false);
         this.i++;
         this.setSelected(true);
     }
 
-    decreaseI(){
+    decreaseI() {
         if (this.i <= 0) return;
         this.setSelected(false);
         this.i--;
         this.setSelected(true);
     }
 
-    increaseJ(){
-        if (this.j >=11) return;
+    increaseJ() {
+        if (this.j >= 11) return;
         this.setSelected(false);
         this.j++;
         this.setSelected(true);
     }
 
-    decreaseJ(){
+    decreaseJ() {
         if (this.j <= 0) return;
         this.setSelected(false);
         this.j--;
@@ -361,9 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener("keydown", function (e) {
         //console.log(e.key);
         switch (e.key) {
-            
+
             //model translation
-    
+
             case "ArrowUp":
                 app.increaseI();
                 break;
@@ -385,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case "p":
                 app.pause_unpause();
                 break;
-                
+
         }
     });
 
