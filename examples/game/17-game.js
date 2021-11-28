@@ -42,6 +42,7 @@ class App extends Application {
     this.physics = new Physics(this.scene);
     // this.helper = new Helper(this.scene, scene);
     this.paused = false;
+    this.lost = false;
     this.waypoints = [
       [0, 1],
       [10, 1],
@@ -122,12 +123,19 @@ class App extends Application {
       },
     ];
     this.waves = [
-      [1, 0, 0, 1, 0],
-      [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 2],
-      [2, 1, 0, 0, 1, 0, 2, 2],
-      [3, 0, 0, 3, 1, 1],
-      [1, 2, 0, 0, 0, 4],
-      [4, 0, 0, 4],
+      [1],
+      [1, 0, 0, 1],
+      [1, 1, 0, 1],
+      [2],
+      [2, 1, 1], 
+      [2, 0, 0, 2],
+      [3],
+      [3,1],
+      [3,0,0,2],
+      [3,1,1,1,0,2],
+      [4],
+      [4,0,2],
+      [1,2,3,4],
     ];
     this.turretTypes = [
       {
@@ -377,13 +385,19 @@ class App extends Application {
   }
 
   showVictory() {
+    if (!this.loss)
     document.getElementById("game").style.display = "none";
     document.getElementById("victory").hidden = false;
   }
 
   showLoss() {
+
+
+
+
     document.getElementById("game").style.display = "none";
     document.getElementById("loss").hidden = false;
+    this.loss = true;
   }
 
   pause_unpause() {
