@@ -43,6 +43,7 @@ class App extends Application {
         this.waypoints = [[0, 1], [10, 1], [10, 5], [6, 5], [6, 3], [1, 3], [1, 10], [8, 10], [8, 8], [12, 8]];
         this.updateWave = new UpdateWave(this.spec, this.scene, this.waypoints);
         this.currentWave = 0;
+        this.updateWave.isPlaying = false;
 
         //highlight coords
         this.i = 0;
@@ -200,10 +201,11 @@ class App extends Application {
     }
 
     spawnNextWave() {
-        if(this.currentWave >= this.waves.length) return;
+        if(this.currentWave >= this.waves.length || this.updateWave.isPlaying == true) return;
         
         this.spawnWave(this.waves[this.currentWave]);
         this.currentWave++;
+        this.updateWave.isPlaying = true;
     }
     
     spawnTurret(turretIndex, position){

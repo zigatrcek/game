@@ -45,9 +45,11 @@ export class UpdateWave {
     }
 
     update_enemies(){
+        let playingFlag = false;
         if (this.scene != null){
             for (let enemy of this.scene.nodes){
-                if (enemy.role == "enemy" && enemy != null) {
+                if (enemy != null && enemy.role == "enemy") {
+                    playingFlag = true;
                     if (enemy.hp <= 0){
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
                         this.money += enemy.maxHp/2;
@@ -77,6 +79,9 @@ export class UpdateWave {
 
                 }
             }
+        }
+        if (playingFlag == false){
+            this.isPlaying = false;
         }
     }
 
