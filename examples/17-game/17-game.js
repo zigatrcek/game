@@ -31,6 +31,14 @@ class App extends Application {
         this.load('scene.json');
     }
 
+    playMusic(){
+    	const sound = new Audio("song.mp3");
+        //console.log("we are trying to play sound i guess")
+        sound.loop = true;
+    	sound.volume = 0.1;
+    	sound.play();
+    }
+
     async load(uri) {
         this.spec = await new SceneLoader().loadScene(uri);
         this.builder = new SceneBuilder(this.spec);
@@ -44,6 +52,8 @@ class App extends Application {
         this.updateWave = new UpdateWave(this.spec, this.scene, this.waypoints);
         this.currentWave = 0;
         this.updateWave.isPlaying = false;
+
+        
 
         //highlight coords
         this.i = 0;
@@ -151,6 +161,7 @@ class App extends Application {
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
+        this.playMusic();
 
     }
 
