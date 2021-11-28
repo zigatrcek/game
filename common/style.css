@@ -1,109 +1,114 @@
-body, html {
-    margin: 0;
-    padding: 0;
+body,
+html {
+  margin: 0;
+  padding: 0;
 }
 
 * {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 .fullscreen {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .fullscreen > * {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .overlay {
-    position: fixed;
-    left: 20px;
-    top: 20px;
+  position: fixed;
+  left: 20px;
+  top: 20px;
 }
 
 a.back {
-    display: block;
-    padding: 5px 10px;
-    background: #fff;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    text-decoration: none;
-    color: #000;
+  display: block;
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
 }
 
 #loss {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0px;
-    top: 0px;
-    z-index: 1;
-    background-color: #fff
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+  background-color: #fff;
 }
 
 #overlay {
-    position: absolute;
-    font-size: 30px;
-    padding-top: 100px;
-    padding-left: 30px;
-    z-index: 1;
+  position: absolute;
+  font-size: 30px;
+  padding-top: 100px;
+  padding-left: 30px;
+  z-index: 1;
 }
 
 #hp {
-    color: red;
-    font-weight:bolder;
+  color: red;
+  font-weight: bolder;
 }
 
 #money {
-    color: green;
-    font-weight:bolder;
+  color: green;
+  font-weight: bolder;
 }
 
 a.back:hover {
-    background: #ddd;
+  background: #ddd;
 }
 
 #turret1 {
-    color:white;
-    font-size: 15px;
-    vertical-align: middle;
-    align-items:center;
+  color: white;
+  font-size: 15px;
+  vertical-align: middle;
+  align-items: center;
 }
 
 #shop {
-    font-weight: bold;
-    font-size: 30;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
-    
-
-
+  font-weight: bold;
+  font-size: 30;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
 }
 
-.row { clear: both; overflow: hidden; }
+.row {
+  clear: both;
+  overflow: hidden;
+}
 
-.cell {float: left; width:70px; color:black; font-size: 20px;
-    -webkit-text-fill-color: black; /* Will override color (regardless of order) */
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
-    vertical-align: middle;
-    margin-bottom: 10px;
+.cell {
+  float: left;
+  width: 70px;
+  color: black;
+  font-size: 20px;
+  -webkit-text-fill-color: black; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  vertical-align: middle;
+  margin-bottom: 10px;
 }
 
 #intro {
-    color:black;
-    background-color: white;
-    bottom: 0;
-    left: 0;
-    position:fixed;
-    margin:10px;
-    border-radius:10px;
-    padding-left: 30px;
-    padding-right: 30px;
+  color: black;
+  background-color: white;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  margin: 10px;
+  border-radius: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
 }

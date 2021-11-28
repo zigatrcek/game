@@ -11,28 +11,37 @@
 </head>
 <body>
     <div id="loss" hidden>
-        U idiot... u fucking lost a tower defense game? KEKW
+        <div class="center">
+            U idiot... u lost a tower defense game? KEKW
+        </div>
         <br>
         <button id ="retry" onClick="window.location.reload();">Go agen</button>
     </div>
-    <div id="overlay">
-        <div id="hp">HP: </div>
-        <div id="money">Money: </div>
-        <div id="intro">
-            <p>
-            Arrow key to move highlight spot<br>
-            Space to start wave<br>
-            Enter to place tower (Costs 100)<br>
-            p = pause
-            </p>
+    <div id="victory" hidden>
+        <div class="center">
+            U won! Pog
         </div>
+        <br>
+        <button id ="retry" onClick="window.location.reload();">Go agen</button>
+    </div>    
+    <div id="game">
+        <div id="overlay">
+            <div id="hp">HP: </div>
+            <div id="money">Money: </div>
+            <div id="intro">
+                <p>
+                    Arrow key to move highlight spot<br>
+                    Space to start wave<br>
+                    Enter to place tower (Costs 100)<br>
+                    p = pause
+                </p>
+            </div>
+    
+            </div>
         </div>
-    </div>
-    <div class="overlay">
-        <a class="back" href="../../index.html">Back</a>
-    </div>
-    <div class="fullscreen">
-        <canvas></canvas>
+        <div class="fullscreen">
+            <canvas></canvas>
+        </div>
     </div>
 </div>
 </body>
