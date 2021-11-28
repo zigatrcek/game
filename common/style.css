@@ -42,8 +42,31 @@ a.back {
   left: 0px;
   top: 0px;
   z-index: 1;
-  background-color: #fff;
+  background: #7458a7;
+  background-image: url("youlose.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
 }
+
+#victory {
+  text-align: center;
+  vertical-align: center;
+  position: absolute;
+  width: 100%;
+  height:100%;
+  color:yellow;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+  background: #7458a7;
+  background-image: url("youwin.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+
+}
+
 
 #overlay {
   position: absolute;

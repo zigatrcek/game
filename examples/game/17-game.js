@@ -184,6 +184,7 @@ class App extends Application {
     const t = (this.time = Date.now());
     const dt = (this.time - this.startTime) * 0.001;
     this.startTime = this.time;
+    //this.playMusic();
 
     //console.log(this.map);
 
@@ -426,10 +427,10 @@ document.addEventListener("DOMContentLoaded", () => {
   gui.add(app, "spawnTurret1");
   gui.add(app, "pause_unpause");
   gui.add(app, "showLoss");
+  gui.add(app, "showVictory");
 
   document.addEventListener("keydown", function (e) {
     app.playMusic();
-
     //console.log(e.key);
     switch (e.key) {
       //model translation
