@@ -126,7 +126,7 @@ class App extends Application {
       [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 2],
       [2, 1, 0, 0, 1, 0, 2, 2],
       [3, 0, 0, 3, 1, 1],
-      [1,2,0,0,0,4],
+      [1, 2, 0, 0, 0, 4],
       [4, 0, 0, 4],
     ];
     this.turretTypes = [
@@ -198,13 +198,12 @@ class App extends Application {
 
         let statusObj = document.getElementById("wavestatus");
 
-
-        if (this.paused){
+        if (this.paused) {
           statusObj.innerHTML = "Paused... Press P to continue";
-        } else if (this.updateWave.isPlaying){
+        } else if (this.updateWave.isPlaying) {
           statusObj.innerHTML = "ONGOING WAVE";
         } else {
-          statusObj.innerHTML = "Press \"space\" to Continue";
+          statusObj.innerHTML = 'Press "space" to Continue';
         }
       }
     }
@@ -431,11 +430,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const app = new App(canvas);
   const gui = new GUI();
   gui.add(app, "enableCamera");
-  gui.add(app, "spawnNextWave");
-  gui.add(app, "spawnTurret1");
-  gui.add(app, "pause_unpause");
-  gui.add(app, "showLoss");
-  gui.add(app, "showVictory");
 
   document.addEventListener("keydown", function (e) {
     app.playMusic();
@@ -464,14 +458,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "p":
         app.pause_unpause();
         break;
-       case "P":
+      case "P":
         app.pause_unpause();
         break;
     }
   });
-
-  // gui.add(app, 'increaseI');
-  // gui.add(app, 'decreaseI');
-  // gui.add(app, 'increaseJ');
-  // gui.add(app, 'decreaseJ');
 });
