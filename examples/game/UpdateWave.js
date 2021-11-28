@@ -57,7 +57,7 @@ export class UpdateWave {
 
           if (enemy.hp <= 0) {
             this.scene.removeNode(this.scene.nodes.indexOf(enemy));
-            this.money += Math.min(enemy.maxHp / 5 * 2, 50);
+            this.money += Math.min(enemy.maxHp / 5 * 1.5, 50);
             this.playDeath();
 
             if (enemy.child && enemy.advanced == "snake") {
