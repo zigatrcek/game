@@ -71,9 +71,13 @@ a.back {
 #overlay {
   position: absolute;
   font-size: 30px;
-  padding-top: 100px;
+  padding-top: 30px;
   padding-left: 30px;
   z-index: 1;
+}
+
+#wavestatus {
+  margin-bottom:  30px;
 }
 
 #hp {
@@ -83,6 +87,11 @@ a.back {
 
 #money {
   color: green;
+  font-weight: bolder;
+}
+
+#wavestatus {
+  color: white;
   font-weight: bolder;
 }
 
