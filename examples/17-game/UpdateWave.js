@@ -51,6 +51,7 @@ export class UpdateWave {
                     if (enemy.hp <= 0){
                         this.scene.removeNode(this.scene.nodes.indexOf(enemy));
                         this.money += enemy.maxHp/2;
+                        this.playDeath();
                         return;
                     }
                     this.traverse_path(enemy, this.path);
@@ -102,7 +103,9 @@ export class UpdateWave {
         if (this.distance(bullet.translation, target.translation) < 0.1) {
             target.hp -= bullet.damage;
             this.scene.removeNode(this.scene.nodes.indexOf(bullet));
-            this.playHit();
+            if (target.hp > 0){
+                this.playHit();
+            }
         }
     }
 
@@ -199,6 +202,14 @@ export class UpdateWave {
 
     playHit(){
     	const sound = new Audio("hit.mp3");
+        //console.log("we are trying to play sound i guess")
+        sound.loop = false;
+    	sound.volume = 0.1;
+    	sound.play();
+    }
+
+    playDeath(){
+    	const sound = new Audio("death.mp3");
         //console.log("we are trying to play sound i guess")
         sound.loop = false;
     	sound.volume = 0.1;
